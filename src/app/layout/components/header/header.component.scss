@@ -1,21 +1,21 @@
-$topnav-background-color: #222;
+@import "~variables.scss";
 :host {
     .navbar {
         background-color: $topnav-background-color;
         .navbar-brand {
-            color: #fff;
+            color: $topnav-color;
         }
         .nav-item > a {
-            color: #999;
+            color: $topnav-color;
             &:hover {
-                color: #fff;
+                color: $topnav-color;
             }
         }
     }
     .messages {
         width: 300px;
         .media {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid $messages-border;
             padding: 5px 10px;
             &:last-child {
                 border-bottom: none;
