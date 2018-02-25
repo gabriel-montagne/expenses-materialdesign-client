@@ -1,6 +1,6 @@
 import { NgRedux } from '@angular-redux/store';
 import { Injectable } from '@angular/core';
-import { IAppState } from '../../shared/store/store.module';
+import { IAppState } from '../../../shared/store/store.module';
 
 @Injectable()
 export class UsersActions {

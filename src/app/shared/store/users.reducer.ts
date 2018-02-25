@@ -1,5 +1,5 @@
-import { UsersActions } from '../../layout/users/users.actions';
-import { IUser } from '../../layout/users/user';
+import { UsersActions } from '../../layout/users/shared/users.actions';
+import { IUser } from '../../layout/users/shared/user';
 
 export interface IUsersStore {
     users: IUser[];
