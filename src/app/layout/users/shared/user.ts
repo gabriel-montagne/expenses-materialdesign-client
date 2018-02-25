@@ -39,6 +39,8 @@ export class User implements IUser{
         this.username = elem.username;
         this.email = elem.email;
         this.role = elem.role;
-        this.profile = new UserProfile(elem.profile);
+        if (elem.profile) {
+            this.profile = new UserProfile(elem.profile);
+        }
     }
 }

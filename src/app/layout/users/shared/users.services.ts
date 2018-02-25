@@ -17,7 +17,7 @@ export class UsersService {
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': 'Token ' + this.token
+                'Token': this.token
             })
         };
     }
