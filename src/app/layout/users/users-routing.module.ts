@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { StatModule } from '../../shared';
 
-import { UsersComponent } from './users.component';
+import { UsersComponent } from './component/users.component';
 
 
 const routes: Routes = [
