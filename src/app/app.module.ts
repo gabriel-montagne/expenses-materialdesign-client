@@ -9,6 +9,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
+import { HttpModule } from '@angular/http';
+import { NgReduxModule } from '@angular-redux/store';
+import { StoreModule } from './shared/store/store.module';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -23,6 +26,7 @@ export function createTranslateLoader(http: HttpClient) {
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        NgReduxModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -30,7 +34,8 @@ export function createTranslateLoader(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        AppRoutingModule
+        AppRoutingModule,
+        StoreModule
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],
