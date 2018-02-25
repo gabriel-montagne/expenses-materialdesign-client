@@ -12,6 +12,7 @@ import { AuthGuard } from './shared';
 import { HttpModule } from '@angular/http';
 import { NgReduxModule } from '@angular-redux/store';
 import { StoreModule } from './shared/store/store.module';
+import { AuthServices } from './auth/shared/auth.services';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -38,7 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
         StoreModule
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard],
+    providers: [AuthGuard, AuthServices],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
