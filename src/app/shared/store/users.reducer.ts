@@ -1,15 +1,15 @@
 import { UsersActions } from '../../layout/users/shared/users.actions';
-import { IUser } from '../../layout/users/shared/user';
+import { IUser, User } from '../../layout/users/shared/user';
 
 export interface IUsersStore {
-    users: IUser[];
+    users: User[];
 }
 
 export const INITIAL_STATE: IUsersStore = {
     users: []
 };
 
-export function UsersReducer(state: IUsersStore = INITIAL_STATE,
+export function usersReducer(state: IUsersStore = INITIAL_STATE,
                                 action: any): IUsersStore {
     switch (action.type) {
         case UsersActions.SAVE_USERS:

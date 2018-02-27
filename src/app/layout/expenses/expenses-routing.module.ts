@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { StatModule } from '../../shared';
 
-import { ExpensesComponent } from './expenses.component';
+import { ExpensesComponent } from './component/expenses.component';
 
 
 const routes: Routes = [

@@ -22,8 +22,15 @@ export class LoginResponse implements ILoginResponse {
   }
 
   private decodeToken(): void {
-    const tokenInfo = jwt_decode(this.token);
-    this.role = tokenInfo.role;
-    this.username = tokenInfo.username;
+    switch (this.token) {
+      case '':
+        this.role = 'undefined';
+        this.username = 'undefined';
+        break;
+      default:
+        const tokenInfo = jwt_decode(this.token);
+        this.role = tokenInfo.role;
+        this.username = tokenInfo.username;
+    }
   }
 }
