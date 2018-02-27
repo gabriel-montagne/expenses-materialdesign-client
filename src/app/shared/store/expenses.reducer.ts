@@ -1,15 +1,15 @@
-import { ExpensesActions } from '../../layout/expenses/expenses.actions';
-import { IExpense } from '../../layout/expenses/expense';
+import { ExpensesActions } from '../../layout/expenses/shared/expenses.actions';
+import { Expense, IExpense } from '../../layout/expenses/shared/expense';
 
 export interface IExpensesStore {
-    expenses: IExpense[];
+    expenses: Expense[];
 }
 
 export const INITIAL_STATE: IExpensesStore = {
     expenses: []
 };
 
-export function ExpensesReducer(state: IExpensesStore = INITIAL_STATE,
+export function expensesReducer(state: IExpensesStore = INITIAL_STATE,
                                 action: any): IExpensesStore {
     switch (action.type) {
         case ExpensesActions.SAVE_EXPENSES:

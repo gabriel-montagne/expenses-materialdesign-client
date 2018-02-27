@@ -1,6 +1,7 @@
 import { NgRedux } from '@angular-redux/store';
 import { Injectable } from '@angular/core';
-import { IAppState } from '../../shared/store/store.module';
+import { IAppState } from '../../../shared/store/store.module';
+import { IExpense } from './expense';
 
 @Injectable()
 export class ExpensesActions {
@@ -9,15 +10,13 @@ export class ExpensesActions {
 
     constructor(
         private _ngRedux: NgRedux<IAppState>
-    ) {
+    ) {}
 
-    }
-
-    public saveExpenses(expenses: {} ) {
+    public saveExpenses(expenses: IExpense[] ) {
         return this._ngRedux.dispatch({type: ExpensesActions.SAVE_EXPENSES, payload: expenses});
     }
 
-    public saveExpense(expense: {} ) {
+    public saveExpense(expense: IExpense ) {
         const payload_ = { expense };
         return this._ngRedux.dispatch({type: ExpensesActions.SAVE_EXPENSE, payload: payload_});
     }

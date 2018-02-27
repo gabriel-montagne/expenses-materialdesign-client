@@ -7,46 +7,53 @@ import persistState from 'redux-localstorage';
 import { createLogger } from 'redux-logger';
 import { getConfig } from '../../../environments/environment';
 import { provideReduxForms } from '@angular-redux/form';
-import { IExpense } from '../../layout/expenses/expense';
-import { ExpensesReducer, IExpensesStore } from './expenses.reducer';
-import { IUsersStore, UsersReducer } from './users.reducer';
+import { IExpense } from '../../layout/expenses/shared/expense';
+import { expensesReducer, IExpensesStore } from './expenses.reducer';
+import { IUsersStore, usersReducer } from './users.reducer';
+import { ILoginStore, loginReducer } from './login.reducer';
 
 export interface IAppState {
-    expenses?: IExpensesStore;
-    users?: IUsersStore;
+  users?: IUsersStore;
+  expenses?: IExpensesStore;
+  login?: ILoginStore;
 }
 
-export const ROOT_REDUCER = combineReducers<IAppState> ({
-    expenses: ExpensesReducer,
-    users: UsersReducer
+export const ROOT_REDUCER = combineReducers<IAppState>({
+  users: usersReducer,
+  expenses: expensesReducer,
+  login: loginReducer,
 });
 
+// TODO: localstorage
+// export const ENHANCERS =  [
+//   persistState('users', { key: '@angular-redux/store/users' })
+// ];
+
 @NgModule({
-    imports: [
-        CommonModule,
-        NgReduxModule
-    ],
-    declarations: []
+  imports: [
+    CommonModule,
+    NgReduxModule
+  ],
+  declarations: []
 })
 
 export class StoreModule {
-    public static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: StoreModule,
-            providers: [
-            ]
-        };
-    }
-    constructor(
-        public store: NgRedux<IAppState>,
-        public devTool: DevToolsExtension,
-    ) {
-        store.configureStore(
-            ROOT_REDUCER,
-            {},
-            getConfig().reduxLog ? [createLogger()] : []
-            // ,
-            // [... ENHANCERS, devTool.isEnabled() ? devTool.enhancer() : (f) => f]
-        );
-    }
+  constructor(public store: NgRedux<IAppState>,
+              devTool: DevToolsExtension) {
+    store.configureStore(
+      ROOT_REDUCER,
+      {},
+      getConfig().reduxLog ? [createLogger()] : []
+      // TODO: localstorage
+      // ,
+      // [... ENHANCERS, devTool.isEnabled() ? devTool.enhancer() : (f) => f]
+    );
+  }
+
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: StoreModule,
+      providers: []
+    };
+  }
 }

@@ -5,6 +5,7 @@ import { AuthServices } from '../../shared/auth.services';
 import { ILogin, ILoginResponse, LoginResponse } from '../shared/login';
 import { FormControl, FormGroup } from '@angular/forms';
 import { error } from 'util';
+import { LoginActions } from '../shared/login.actions';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   public isLogging = false;
 
   constructor(public _router: Router,
-              private _authServices: AuthServices) {
+              private _authServices: AuthServices,
+              private _actions: LoginActions) {
     this.loginForm = new FormGroup({
       username: new FormControl(),
       password: new FormControl()
@@ -41,6 +43,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (result: LoginResponse) => {
           const login = new LoginResponse(result.token);
+          this._actions.saveLogin(login);
           this.isLogging = false;
         },
         (err) => {
