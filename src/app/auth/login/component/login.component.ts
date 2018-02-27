@@ -44,7 +44,9 @@ export class LoginComponent implements OnInit {
         (result: LoginResponse) => {
           const login = new LoginResponse(result.token);
           this._actions.saveLogin(login);
+          localStorage.setItem('token', login.token)
           this.isLogging = false;
+          this._router.navigate(['']);
         },
         (err) => {
           this.isLoginUnsuccessful = true;
