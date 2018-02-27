@@ -6,6 +6,7 @@ import { ILogin, ILoginResponse, LoginResponse } from '../shared/login';
 import { FormControl, FormGroup } from '@angular/forms';
 import { error } from 'util';
 import { LoginActions } from '../shared/login.actions';
+import { PermissionHandlerServices } from '../../../shared/services/permission-handler.services';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public _router: Router,
               private _authServices: AuthServices,
+              private _permissionHandler: PermissionHandlerServices,
               private _actions: LoginActions) {
     this.loginForm = new FormGroup({
       username: new FormControl(),
@@ -43,8 +45,8 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (result: LoginResponse) => {
           const login = new LoginResponse(result.token);
+          this._permissionHandler.saveLogin(login);
           this._actions.saveLogin(login);
-          localStorage.setItem('token', login.token)
           this.isLogging = false;
           this._router.navigate(['']);
         },
