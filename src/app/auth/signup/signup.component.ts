@@ -36,13 +36,12 @@ export class SignupComponent implements OnInit {
       password: form.get('password').value
     };
     this._authServices.register(payload).subscribe(
-      result => console.log(result),
+      result => true,
       error => console.log(error)
     );
   }
 
   private validUsername(control: AbstractControl) {
-    console.log(control.errors);
     const username = control.value;
     return this._authServices.isUsernameAvailable(username).map(
       (res) => {

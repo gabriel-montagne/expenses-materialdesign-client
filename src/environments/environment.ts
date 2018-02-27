@@ -5,27 +5,77 @@
 import { appConfigTest } from './../app/app.config.test';
 
 export const environment = {
-    apiUrl: 'http://localhost:9000/',
-    apiToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
-    'eyJ1c2VybmFtZSI6ImdhYnJpZWwubXVudGVhbnVAY2FybWF0Y2guY29tIiwiZW1haWwiOiJnYWJyaWVsLm11bnRlYW51QGNhcm1hdGNoLmNvbSIsInJvbGUiOiJ1c2VyIn0.' +
-    'vuF5k2hy9ON0zkT8ixJU5zWhuzfA-f1EYap2cqNr7t8',
-    production: false
+  apiUrl: 'http://localhost:9000/',
+  apiToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+  'eyJ1c2VybmFtZSI6ImdhYnJpZWwubXVudGVhbnVAY2FybWF0Y2guY29tIiwiZW1haWwiOiJnYWJyaWVsLm11bnRlYW51QGNhcm1hdGNoLmNvbSIsInJvbGUiOiJ1c2VyIn0.' +
+  'vuF5k2hy9ON0zkT8ixJU5zWhuzfA-f1EYap2cqNr7t8',
+  production: false
 };
+
+export const appScopes = {
+  admin: {
+    users: {
+      view: true,
+      viewAll: true,
+      edit: true,
+      editAll: true
+    },
+    expenses: {
+      view: true,
+      viewAll: true,
+      edit: true,
+      editAll: true
+    }
+  },
+  manager: {
+    users: {
+      view: true,
+      viewAll: true,
+      edit: false,
+      editAll: false
+    },
+    expenses: {
+      view: true,
+      viewAll: true,
+      edit: true,
+      editAll: true
+    }
+  },
+  user: {
+    users: {
+      view: false,
+      viewAll: false,
+      edit: false,
+      editAll: false
+    },
+    expenses: {
+      view: true,
+      viewAll: false,
+      edit: true,
+      editAll: false
+    }
+  }
+}
 
 
 const PROVIDERS: any[] = [
-    { provide: 'AppConfig', useFactory: getConfig },
-    { provide: 'Window', useFactory: getWindow }
+  {provide: 'AppConfig', useFactory: getConfig},
+  {provide: 'Window', useFactory: getWindow},
+  {provide: 'AppScopes', useFactory: getScopes}
 ];
 
 export function getConfig() {
-    return appConfigTest;
+  return appConfigTest;
+}
+
+export function getScopes() {
+  return appScopes;
 }
 
 export function getWindow() {
-    return window;
+  return window;
 }
 
 export const ENV_PROVIDERS = [
-    ...PROVIDERS,
+  ...PROVIDERS,
 ];

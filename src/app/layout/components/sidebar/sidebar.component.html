@@ -1,9 +1,15 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <div class="list-group">
-        <a [routerLink]="['/expenses']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="routesPermissions['/expenses']"
+           [routerLink]="['/expenses']"
+           [routerLinkActive]="['router-link-active']"
+           class="list-group-item">
             <i class="fa fa-fw fa-money"></i>&nbsp;{{ 'Expenses' | translate }}
         </a>
-        <a routerLink="/users" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="routesPermissions['/users']"
+           routerLink="/users"
+           [routerLinkActive]="['router-link-active']"
+           class="list-group-item">
             <i class="fa fa-fw fa-users"></i>&nbsp;{{ 'Users' | translate }}
         </a>
     </div>

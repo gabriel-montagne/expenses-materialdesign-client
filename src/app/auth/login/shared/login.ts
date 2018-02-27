@@ -6,13 +6,17 @@ export interface ILogin {
 }
 
 export interface ILoginResponse {
+  userid: number;
   username: string;
+  email: string;
   role: string;
   token: string;
 }
 
 export class LoginResponse implements ILoginResponse {
+  public userid: number;
   public username: string;
+  public email: string;
   public role: string;
   public token: string;
 
@@ -31,6 +35,8 @@ export class LoginResponse implements ILoginResponse {
         const tokenInfo = jwt_decode(this.token);
         this.role = tokenInfo.role;
         this.username = tokenInfo.username;
+        this.email = tokenInfo.email;
+        this.userid = tokenInfo.userid;
     }
   }
 }
