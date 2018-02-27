@@ -45,6 +45,10 @@ export class AuthServices implements OnDestroy {
     return this._httpClient.post(this.url + 'auth/signIn', payload);
   }
 
+  public logout() {
+    return this._httpClient.post(this.url + 'auth/signOut', this.addAuthorization());
+  }
+
   ngOnDestroy() {
 
   }
