@@ -27,7 +27,9 @@
                     <p >User and/or password don't match</p>
                   </div>
                 </div>
-                <button type="submit" class="btn rounded-btn"> Log in </button>                &nbsp;
+                <button type="submit"
+                        class="btn rounded-btn"
+                        [disabled]="isLogging"> Log in </button>                &nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
                 <a class="btn rounded-btn" >Google OAuth</a>
             </form>

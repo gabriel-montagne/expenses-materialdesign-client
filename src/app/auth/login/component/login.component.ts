@@ -15,7 +15,8 @@ import { error } from 'util';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public username: string = null;
-  public isLoginUnsuccessful: Boolean = false;
+  public isLoginUnsuccessful = false;
+  public isLogging = false;
 
   constructor(public _router: Router,
               private _authServices: AuthServices) {
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
 
   public onBasicLogin(form: FormGroup) {
     this.isLoginUnsuccessful = false;
+    this.isLogging = true;
     const payload = {
       username: form.get('username').value,
       password: form.get('password').value
@@ -39,9 +41,11 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (result: LoginResponse) => {
           const login = new LoginResponse(result.token);
+          this.isLogging = false;
         },
         (err) => {
           this.isLoginUnsuccessful = true;
+          this.isLogging = false;
         }
       );
   }
