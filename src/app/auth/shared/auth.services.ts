@@ -11,21 +11,23 @@ import { IAppState } from '../../shared/store/store.module';
 export class AuthServices implements OnDestroy {
   public url = environment.apiUrl;
   public token = environment.apiToken;
-  public httpOptions: any;
 
   constructor(private _httpClient: HttpClient,
               private _store: NgRedux<IAppState>) {
   }
 
-  public isAuthenticated() {
+  public addAuthorization() {
     this.token = localStorage.getItem('token');
-    this.httpOptions = {
+    return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
       })
     };
-    return this._httpClient.get(this.url + 'auth/isAuthenticated', this.httpOptions);
+  }
+
+  public isAuthenticated() {
+    return this._httpClient.get(this.url + 'auth/isAuthenticated', this.addAuthorization());
   }
 
   public isUsernameAvailable(username: string): Observable<any> {
