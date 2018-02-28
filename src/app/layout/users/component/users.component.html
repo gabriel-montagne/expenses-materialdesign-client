@@ -8,7 +8,6 @@
                         <tr>
                             <th>#</th>
                             <th>Username</th>
-                            <th>Email</th>
                             <th>Role</th>
                         </tr>
                     </thead>
@@ -16,13 +15,15 @@
                         <tr *ngFor="let user of users; let idx = index">
                             <th scope="row">{{idx + 1}}</th>
                             <td>{{user.username}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.role}}</td>
                             <td>
-                                <i class="fa fa-pencil"></i>
+                              <select name="role" id="">
+                                <option value="role"
+                                        [disabled]="!isRoleEditable"
+                                        *ngFor="let role of roles">{{role}}</option>
+                              </select>
                             </td>
                             <td>
-                                <div class="fa fa-trash-o"></div>
+                                <div [hidden]="!isRoleEditable" class="fa fa-trash-o"></div>
                             </td>
                         </tr>
                     </tbody>
