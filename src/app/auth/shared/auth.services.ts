@@ -6,6 +6,7 @@ import { ILogin } from '../login/shared/login';
 import { Observable } from 'rxjs/Observable';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../shared/store/store.module';
+import { PermissionHandlerServices } from '../../shared/services/permission-handler.services';
 
 @Injectable()
 export class AuthServices implements OnDestroy {
@@ -13,7 +14,14 @@ export class AuthServices implements OnDestroy {
   public token = environment.apiToken;
 
   constructor(private _httpClient: HttpClient,
+              private _permissionsHandler: PermissionHandlerServices,
               private _store: NgRedux<IAppState>) {
+  }
+
+  public saveLoginLocal(login): void {
+    localStorage.setItem('token', login.token);
+    localStorage.setItem('role', login.role);
+    localStorage.setItem('userid', login.userid);
   }
 
   public addAuthorization() {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { getScopes } from '../../../environments/environment';
 import { LoginResponse } from '../../auth/login/shared/login';
+import { appScopes } from './permissions';
 
 @Injectable()
 export class PermissionHandlerServices {
@@ -10,23 +10,15 @@ export class PermissionHandlerServices {
 
   constructor() {}
 
-  public saveLogin(login) {
-    localStorage.setItem('token', login.token);
-    localStorage.setItem('role', login.role);
-    localStorage.setItem('userid', login.userid);
-    this.mapPermissions();
-  }
-
   public mapPermissions(): void {
-    const scopes = getScopes();
     this.role = localStorage.getItem('role');
     if (!this.role) {
       const token = localStorage.getItem('token');
       this.role = new LoginResponse(token).role;
       localStorage.setItem('role', this.role);
     }
-    this.mapRoutesPermissions(scopes, this.role);
-    this.mapMenuPermissions(scopes, this.role);
+    this.mapRoutesPermissions(appScopes, this.role);
+    this.mapMenuPermissions(appScopes, this.role);
   }
 
   public mapRoutesPermissions(scopes: any, role: string): void {

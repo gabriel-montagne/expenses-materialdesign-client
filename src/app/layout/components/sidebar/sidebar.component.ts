@@ -19,7 +19,6 @@ export class SidebarComponent {
               private _permissionHandler: PermissionHandlerServices) {
     this.menuPermissions = _permissionHandler.menuPermissions;
     this.routesPermissions = _permissionHandler.routesPermissions;
-    console.log(this.routesPermissions);
   }
 
   eventCalled() {
