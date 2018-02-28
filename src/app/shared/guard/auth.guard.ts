@@ -22,7 +22,12 @@ export class AuthGuard implements CanActivate {
               state: RouterStateSnapshot): Observable<boolean> {
 
     if (Object.keys(this._permissionHandler.routesPermissions).length === 0) {
-      this._permissionHandler.mapPermissions();
+      try {
+        this._permissionHandler.mapPermissions();
+      } catch {
+        this._router.navigate(['login']);
+        return Observable.of(false);
+      }
     }
 
     return this._authServices.isAuthenticated()

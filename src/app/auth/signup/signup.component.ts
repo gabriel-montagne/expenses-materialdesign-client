@@ -33,7 +33,8 @@ export class SignupComponent implements OnInit {
   public register(form: FormGroup) {
     const payload = {
       username: form.get('email').value,
-      password: form.get('password').value
+      password: form.get('password').value,
+      fullname: form.get('fullname').value
     };
     this._authServices.register(payload).subscribe(
       result => true,

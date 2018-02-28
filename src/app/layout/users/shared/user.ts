@@ -1,6 +1,7 @@
 export interface IUser {
     id: number;
     username: string;
+    fullname: string;
     email: string;
     role: string;
     profile: IUserProfile;
@@ -30,6 +31,7 @@ export class UserProfile implements IUserProfile {
 export class User implements IUser{
     public id: number;
     public username: string;
+    public fullname: string;
     public email: string;
     public role: string;
     public profile: UserProfile;
@@ -37,6 +39,7 @@ export class User implements IUser{
     constructor(elem: any) {
         this.id = elem.id;
         this.username = elem.username;
+        this.fullname = elem.fullname;
         this.email = elem.email;
         this.role = elem.role;
         if (elem.profile) {
