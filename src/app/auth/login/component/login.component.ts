@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public _router: Router,
               private _authServices: AuthServices,
-              private _permissionHandler: PermissionHandlerServices,
+              private _permissionsHandler: PermissionHandlerServices,
               private _actions: LoginActions) {
     this.loginForm = new FormGroup({
       username: new FormControl(),
@@ -45,8 +45,9 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (result: LoginResponse) => {
           const login = new LoginResponse(result.token);
-          this._permissionHandler.saveLogin(login);
+          this._authServices.saveLoginLocal(login);
           this._actions.saveLogin(login);
+          this._permissionsHandler.mapPermissions();
           this.isLogging = false;
           this._router.navigate(['']);
         },

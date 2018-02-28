@@ -5,7 +5,7 @@ import { Inject, ModuleWithProviders, NgModule } from '@angular/core';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import persistState from 'redux-localstorage';
 import { createLogger } from 'redux-logger';
-import { getConfig } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { provideReduxForms } from '@angular-redux/form';
 import { IExpense } from '../../layout/expenses/shared/expense';
 import { expensesReducer, IExpensesStore } from './expenses.reducer';
@@ -43,7 +43,7 @@ export class StoreModule {
     store.configureStore(
       ROOT_REDUCER,
       {},
-      getConfig().reduxLog ? [createLogger()] : []
+      environment.reduxLog ? [createLogger()] : []
       // TODO: localstorage
       // ,
       // [... ENHANCERS, devTool.isEnabled() ? devTool.enhancer() : (f) => f]
