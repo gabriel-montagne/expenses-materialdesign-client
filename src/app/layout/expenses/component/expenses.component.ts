@@ -135,4 +135,20 @@ export class ExpensesComponent implements OnInit {
         error => console.log(error)
       );
   }
+
+  public onSelectUser(userId): void {
+    this._expensesService.getUserExpenses(userId)
+      .subscribe(
+        (result: any) => {
+          const expenses = result.map((expense) => {
+            return new Expense(expense);
+          });
+          this._expensesActions.saveExpenses(expenses);
+          return;
+        },
+        (error: any) => {
+          console.error(error);
+        }
+      );
+  }
 }
