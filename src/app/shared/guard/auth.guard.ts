@@ -8,18 +8,31 @@ import 'rxjs/add/operator/map';
 import { NgRedux, select } from '@angular-redux/store';
 import { IAppState } from '../store/store.module';
 import { IUser } from '../../layout/users/shared/user';
-import { ILoginResponse } from '../../auth/login/shared/login';
+import { ILoginResponse, LoginResponse } from '../../auth/login/shared/login';
 import { PermissionHandlerServices } from '../services/permission-handler.services';
+import { LoginActions } from '../../auth/login/shared/login.actions';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
+  private _login: any;
+  @select(['login', 'login'])
+  private _login$: Observable<any>;
+
   constructor(private _router: Router,
               private _authServices: AuthServices,
-              private _permissionHandler: PermissionHandlerServices) {}
+              private _permissionHandler: PermissionHandlerServices,
+              private _loginActions: LoginActions,
+              private _store: NgRedux<IAppState>) {
+    this._login$.subscribe((login) => {
+      this._login = login;
+    });
+  }
 
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> {
+
+    this.ifLoginNull();
 
     if (Object.keys(this._permissionHandler.routesPermissions).length === 0) {
       try {
@@ -50,5 +63,15 @@ export class AuthGuard implements CanActivate {
 
   private checkScope(state): boolean {
     return this._permissionHandler.routesPermissions[state.url];
+  }
+
+  private ifLoginNull() {
+    if (!this._login) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const login = new LoginResponse(token);
+        this._loginActions.saveLogin(login);
+      }
+    }
   }
 }

@@ -15,6 +15,7 @@ import { StoreModule } from './shared/store/store.module';
 import { AuthServices } from './auth/shared/auth.services';
 import { AnonymGuard } from './shared/guard/anonym.guard';
 import { PermissionHandlerServices } from './shared/services/permission-handler.services';
+import { LoginActions } from './auth/login/shared/login.actions';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -41,7 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
         StoreModule
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard, AnonymGuard, AuthServices, PermissionHandlerServices],
+    providers: [AuthGuard, AnonymGuard, AuthServices, PermissionHandlerServices, LoginActions],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
