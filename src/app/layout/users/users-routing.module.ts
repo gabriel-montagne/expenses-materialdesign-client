@@ -9,21 +9,21 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 const routes: Routes = [
-    {
-        path: '',
-        component: UsersComponent,
-        resolve: {
-            usersResolver: UsersResolver
-        }
+  {
+    path: '',
+    component: UsersComponent,
+    resolve: {
+      usersResolver: UsersResolver
     }
+  }
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(routes),
+  imports: [
+    RouterModule.forChild(routes),
     HttpClientModule],
-    providers: [UsersResolver],
-    exports: [RouterModule]
+  providers: [UsersResolver],
+  exports: [RouterModule]
 })
 export class UsersRoutingModule {
 }
