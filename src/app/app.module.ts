@@ -19,30 +19,31 @@ import { LoginActions } from './auth/login/shared/login.actions';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
-    // for development
-    // return new TranslateHttpLoader(http, '/start-angular/expenses-materialdesign-client/master/dist/assets/i18n/', '.json');
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  // for development
+  // return new TranslateHttpLoader(http, '/start-angular/expenses-materialdesign-client/master/dist/assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-    imports: [
-        CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        NgReduxModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: createTranslateLoader,
-                deps: [HttpClient]
-            }
-        }),
-        AppRoutingModule,
-        StoreModule
-    ],
-    declarations: [AppComponent],
-    providers: [AuthGuard, AnonymGuard, AuthServices, PermissionHandlerServices, LoginActions],
-    bootstrap: [AppComponent]
+  imports: [
+    CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    NgReduxModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
+    AppRoutingModule,
+    StoreModule
+  ],
+  declarations: [AppComponent],
+  providers: [AuthGuard, AnonymGuard, AuthServices, PermissionHandlerServices, LoginActions],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

@@ -5,19 +5,24 @@ import { IExpense } from './expense';
 
 @Injectable()
 export class ExpensesActions {
-    public static readonly SAVE_EXPENSES = 'SAVE_EXPENSES';
-    public static readonly SAVE_EXPENSE = 'SAVE_EXPENSE';
+  public static readonly SAVE_EXPENSES = 'SAVE_EXPENSES';
+  public static readonly SAVE_EXPENSE = 'SAVE_EXPENSE';
+  public static readonly DELETE_EXPENSE = 'DELETE_EXPENSE';
 
-    constructor(
-        private _ngRedux: NgRedux<IAppState>
-    ) {}
+  constructor(private _ngRedux: NgRedux<IAppState>) {
+  }
 
-    public saveExpenses(expenses: IExpense[] ) {
-        return this._ngRedux.dispatch({type: ExpensesActions.SAVE_EXPENSES, payload: expenses});
-    }
+  public saveExpenses(expenses: IExpense[]) {
+    return this._ngRedux.dispatch({type: ExpensesActions.SAVE_EXPENSES, payload: expenses});
+  }
 
-    public saveExpense(expense: IExpense ) {
-        const payload_ = { expense };
-        return this._ngRedux.dispatch({type: ExpensesActions.SAVE_EXPENSE, payload: payload_});
-    }
+  public saveExpense(expense: IExpense) {
+    const payload_ = {expense};
+    return this._ngRedux.dispatch({type: ExpensesActions.SAVE_EXPENSE, payload: payload_});
+  }
+
+  public deleteExpense(expense: IExpense) {
+    const payload_ = {expense};
+    return this._ngRedux.dispatch({type: ExpensesActions.DELETE_EXPENSE, payload: payload_});
+  }
 }
