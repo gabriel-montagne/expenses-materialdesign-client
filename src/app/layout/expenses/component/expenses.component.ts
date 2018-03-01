@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../users/shared/user';
+import { Expense } from '../shared/expense';
+import { Observable } from 'rxjs/Observable';
+import { select } from '@angular-redux/store';
+import { ExpensesService } from '../shared/expenses.service';
 
 @Component({
   selector: 'app-expenses',
@@ -7,7 +12,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExpensesComponent implements OnInit {
 
-  constructor() { }
+  public selectedUser: User;
+
+  public expenses: Expense[];
+
+  @select(['expenses', 'expenses'])
+  private _expenses$: Observable<any>;
+
+  constructor(
+    private _expensesService: ExpensesService
+  ) { }
 
   ngOnInit() {
   }
