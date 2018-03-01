@@ -23,7 +23,7 @@ export class ExpensesResolver implements Resolve<any> {
           const expenses = result.map((expense) => {
             return new Expense(expense);
           });
-          this._expensesActions.saveExpense(expenses);
+          this._expensesActions.saveExpenses(expenses);
           return;
         },
         (error: any) => {

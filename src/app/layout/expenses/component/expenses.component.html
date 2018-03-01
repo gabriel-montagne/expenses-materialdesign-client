@@ -1,3 +1,77 @@
-<p>
-  expenses works!
-</p>
+<div>
+  <app-page-header [heading]="'Expenses'" [icon]="'fa-users'"></app-page-header>
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+      <div class="card-body table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Comments</th>
+            <th>
+              <i class="fa fa-plus"
+                 [hidden]="!isMe && !isManager"
+                 (click)="addExpense()"></i>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let expense of expenses; let idx = index">
+            <th scope="row">{{idx + 1}}</th>
+            <td [ngSwitch]="expense.isEdited">
+              <ng-container *ngSwitchCase=false>
+                <span>{{expense.date | date: 'yyyy-MM-dd HH:mm'}}</span>
+              </ng-container>
+              <ng-container *ngSwitchCase=true>
+                <input [(ngModel)]="expense.date"
+                       ngui-datetime-picker>
+              </ng-container>
+            </td>
+            <td [ngSwitch]="expense.isEdited">
+              <ng-container *ngSwitchCase=false>
+                <span>{{expense.description}}</span>
+              </ng-container>
+              <ng-container *ngSwitchCase=true>
+                <input type="text" [(ngModel)]="expense.description">
+              </ng-container>
+            </td>
+            <td [ngSwitch]="expense.isEdited">
+              <ng-container *ngSwitchCase=false>
+                <span>{{expense.amount}}</span>
+              </ng-container>
+              <ng-container *ngSwitchCase=true>
+                <input type="number" [(ngModel)]="expense.amount">
+              </ng-container>
+            </td>
+            <td [ngSwitch]="expense.isEdited">
+              <ng-container *ngSwitchCase=false>
+                <span>{{expense.comment}}</span>
+              </ng-container>
+              <ng-container *ngSwitchCase=true>
+                <input type="text" [(ngModel)]="expense.comment">
+              </ng-container>
+            </td>
+            <td>
+              <div [hidden]="!(expense.isEditable && !expense.isEdited)"
+                   class="fa fa-trash-o"
+                   (click)="deleteExpense(expense)"></div>
+              <div [hidden]="!(expense.isEditable && !expense.isEdited)"
+                   class="fa fa-pencil"
+                   (click)="editEpense(expense)"></div>
+              <div [hidden]="!(expense.isEditable && expense.isEdited)"
+                   class="fa fa-save"
+                   (click)="saveExpense()"></div>
+              <div [hidden]="!(expense.isEditable && expense.isEdited)"
+                   class="fa fa-reply"
+                   (click)="cancelEdit()"></div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

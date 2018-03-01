@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser, ROLES } from '../shared/user';
+import { IUser, ROLES, User } from '../shared/user';
 import { NgRedux, select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { IAppState } from '../../../shared/store/store.module';
@@ -10,9 +10,10 @@ import { IAppState } from '../../../shared/store/store.module';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  public users: IUser[];
   public roles = ROLES;
   public isAdmin = false;
+
+  public users: User[];
 
   @select(['users', 'users'])
   private _users$: Observable<any>;
