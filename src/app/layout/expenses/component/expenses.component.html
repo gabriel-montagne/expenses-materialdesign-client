@@ -1,5 +1,11 @@
 <div>
   <app-page-header [heading]="'Expenses'" [icon]="'fa-users'"></app-page-header>
+  <select *ngIf="selectedUser"
+          name="userSelector"
+          [ngModel]="selectedUser.id"
+          (ngModelChange)="onSelectUser($event)">
+    <option value="{{user.id}}" *ngFor="let user of users">{{user.fullname}}</option>
+  </select>
   <div class="row">
     <div class="col col-xl-12 col-lg-12">
       <div class="card-body table-responsive">

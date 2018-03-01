@@ -20,8 +20,8 @@ export class UsersResolver implements Resolve<any> {
     if (currentUserRole === 'user') {
       return this._usersService.getMe()
         .subscribe(
-          (result: any) => {
-            const users = [].push(new User(result));
+          (result: User) => {
+            const users = [result];
             this._usersActions.saveUsers(users);
             return;
           },

@@ -21,6 +21,8 @@ export function expensesReducer(state: IExpensesStore = INITIAL_STATE,
       });
       if (savedIdx > -1) {
         expensesToSave.splice(savedIdx, 1, new Expense(action.payload.expense));
+      } else {
+        expensesToSave.push(new Expense(action.payload.expense));
       }
       return {...state, expenses: expensesToSave};
     case ExpensesActions.DELETE_EXPENSE:
