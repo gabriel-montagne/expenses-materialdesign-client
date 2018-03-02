@@ -31,8 +31,9 @@ export class LoginResponse implements ILoginResponse {
   private decodeToken(): void {
     switch (this.token) {
       case '':
-        this.role = 'undefined';
-        this.username = 'undefined';
+        this.role = null;
+        this.username = null;
+        this.userid = null;
         break;
       default:
         const tokenInfo = jwt_decode(this.token);
@@ -42,5 +43,17 @@ export class LoginResponse implements ILoginResponse {
         this.email = tokenInfo.email;
         this.userid = tokenInfo.userid;
     }
+  }
+
+  public saveToLocalStorage() {
+    localStorage.setItem('token', this.token);
+    localStorage.setItem('role', this.role);
+    localStorage.setItem('userid', this.userid.toString());
+  }
+
+  public removeFromLocalStorage() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userid');
   }
 }

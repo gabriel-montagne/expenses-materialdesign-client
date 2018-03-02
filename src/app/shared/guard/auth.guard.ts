@@ -34,6 +34,22 @@ export class AuthGuard implements CanActivate {
 
     this.ifLoginNull();
 
+    this.ifPermissionsEmpty();
+
+    return this.resolveRoute(route, state);
+  }
+
+  private ifLoginNull() {
+    if (!this._login) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const login = new LoginResponse(token);
+        this._loginActions.saveLogin(login);
+      }
+    }
+  }
+
+  private ifPermissionsEmpty() {
     if (Object.keys(this._permissionHandler.routesPermissions).length === 0) {
       try {
         this._permissionHandler.mapPermissions();
@@ -42,7 +58,10 @@ export class AuthGuard implements CanActivate {
         return Observable.of(false);
       }
     }
+  }
 
+  private resolveRoute(route: ActivatedRouteSnapshot,
+                       state: RouterStateSnapshot): Observable<boolean> {
     return this._authServices.isAuthenticated()
       .map(
         result => {
@@ -63,15 +82,5 @@ export class AuthGuard implements CanActivate {
 
   private checkScope(state): boolean {
     return this._permissionHandler.routesPermissions[state.url];
-  }
-
-  private ifLoginNull() {
-    if (!this._login) {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const login = new LoginResponse(token);
-        this._loginActions.saveLogin(login);
-      }
-    }
   }
 }
