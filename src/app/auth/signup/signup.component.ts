@@ -3,6 +3,7 @@ import { routerTransition } from '../../router.animations';
 import { AbstractControl, EmailValidator, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthServices } from '../shared/auth.services';
+import { LoginResponse } from '../login/shared/login';
 
 @Component({
   selector: 'app-signup',
@@ -33,11 +34,14 @@ export class SignupComponent implements OnInit {
   public register(form: FormGroup) {
     const payload = {
       username: form.get('email').value,
+      email: form.get('email').value,
       password: form.get('password').value,
       fullname: form.get('fullname').value
     };
     this._authServices.register(payload).subscribe(
-      result => true,
+      (result: LoginResponse) => {
+        this._authServices.onSuccessfulLogin(result.token);
+        },
       error => console.log(error)
     );
   }

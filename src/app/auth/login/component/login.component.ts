@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { routerTransition } from '../../../router.animations';
 import { AuthServices } from '../../shared/auth.services';
 import { ILogin, ILoginResponse, LoginResponse } from '../shared/login';
 import { FormControl, FormGroup } from '@angular/forms';
-import { error } from 'util';
-import { LoginActions } from '../shared/login.actions';
-import { PermissionHandlerServices } from '../../../shared/services/permission-handler.services';
+import { AuthService } from 'angular2-social-login';
+import { GoogleOauthLogin } from '../shared/oauth-login';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +18,10 @@ export class LoginComponent implements OnInit {
   public isLoginUnsuccessful = false;
   public isLogging = false;
 
-  constructor(public _router: Router,
-              private _authServices: AuthServices,
-              private _permissionsHandler: PermissionHandlerServices,
-              private _actions: LoginActions) {
+  private sub: any;
+
+  constructor(private _authServices: AuthServices,
+              private _oauthService: AuthService) {
     this.loginForm = new FormGroup({
       username: new FormControl(),
       password: new FormControl()
@@ -44,17 +42,32 @@ export class LoginComponent implements OnInit {
     this._authServices.basicLogin(payload)
       .subscribe(
         (result: LoginResponse) => {
-          const login = new LoginResponse(result.token);
-          this._authServices.saveLoginLocal(login);
-          this._actions.saveLogin(login);
-          this._permissionsHandler.mapPermissions();
           this.isLogging = false;
-          this._router.navigate(['']);
+          this._authServices.onSuccessfulLogin(result.token);
         },
         (err) => {
           this.isLoginUnsuccessful = true;
           this.isLogging = false;
         }
       );
+  }
+
+  public onOAuthLogin() {
+    this.isLoginUnsuccessful = false;
+    this.isLogging = true;
+    this.sub = this._oauthService.login('google').subscribe(
+      (data) => {
+        return this._authServices.oauthLogin(new GoogleOauthLogin(data))
+          .subscribe(
+            (result: LoginResponse) => {
+              this.isLogging = false;
+              this._authServices.onSuccessfulLogin(result.token);
+            },
+            err => {
+              this.isLoginUnsuccessful = true;
+              this.isLogging = false;
+            });
+      }
+    );
   }
 }
