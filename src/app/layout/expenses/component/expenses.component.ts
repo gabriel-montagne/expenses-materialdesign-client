@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { IUser, User } from '../../users/shared/user';
 import { Expense } from '../shared/expense';
 import { Observable } from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import { ExpensesService } from '../shared/expenses.service';
 import { IAppState } from '../../../shared/store/store.module';
 import * as moment from 'moment';
 import { ExpensesActions } from '../shared/expenses.actions';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'app-expenses',
@@ -22,20 +23,18 @@ export class ExpensesComponent implements OnInit {
   public currentExpense: Expense;
 
   public users: User[];
-
+  public expenses: Expense[];
   @select(['users', 'users'])
   private _users$: Observable<any>;
-
-  public expenses: Expense[];
-
   @select(['expenses', 'expenses'])
   private _expenses$: Observable<any>;
 
-  constructor(
-    private _expensesService: ExpensesService,
-    private _expensesActions: ExpensesActions,
-    private _ngRedux: NgRedux<IAppState>
-  ) {
+  constructor(private _toastr: ToastsManager,
+              private _vRef: ViewContainerRef,
+              private _expensesService: ExpensesService,
+              private _expensesActions: ExpensesActions,
+              private _ngRedux: NgRedux<IAppState>) {
+    this._toastr.setRootViewContainerRef(this._vRef);
     this.isManager = (localStorage.getItem('role') === 'manager');
     const userId = localStorage.getItem('userid');
     this._users$.subscribe((users) => {
@@ -60,8 +59,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   public updateDate(event) {
-    console.log(this.currentExpense.date);
-    this.currentExpense.date = new Date( moment(event).format('YYYY-MM-DD HH:mm'));
+    this.currentExpense.date = new Date(moment(event).format('YYYY-MM-DD HH:mm'));
   }
 
   public addExpense(): void {
@@ -83,7 +81,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   public cancelEdit(): void {
-    this.currentExpense.isEdited = false
+    this.currentExpense.isEdited = false;
     const idx = this.expenses.findIndex((expense) => {
       return expense.id === this.currentExpense.id;
     });
@@ -112,7 +110,7 @@ export class ExpensesComponent implements OnInit {
         (result: Expense) => {
           this._expensesActions.saveExpense(result);
         },
-        error => console.log(error)
+        error => this._toastr.warning('Insert was unsuccessful!')
       );
   }
 
@@ -122,7 +120,7 @@ export class ExpensesComponent implements OnInit {
         (result: Expense) => {
           this._expensesActions.saveExpense(result);
         },
-        error => console.log(error)
+        error => this._toastr.warning('Update was unsuccessful!')
       );
   }
 
@@ -132,7 +130,7 @@ export class ExpensesComponent implements OnInit {
         (result) => {
           this._expensesActions.deleteExpense(expense);
         },
-        error => console.log(error)
+        error => this._toastr.warning('Delete was unsuccessful!')
       );
   }
 
@@ -146,9 +144,7 @@ export class ExpensesComponent implements OnInit {
           this._expensesActions.saveExpenses(expenses);
           return;
         },
-        (error: any) => {
-          console.error(error);
-        }
+        (error: any) => this._toastr.warning('Could not load expenses for this user!')
       );
   }
 }

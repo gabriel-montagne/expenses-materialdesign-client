@@ -16,5 +16,5 @@ export function getWindow() {
 }
 
 export const ENV_PROVIDERS = [
-  ...PROVIDERS,
+  ...PROVIDERS
 ];

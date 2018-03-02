@@ -21,7 +21,7 @@ export interface IAppState {
 export const ROOT_REDUCER = combineReducers<IAppState>({
   users: usersReducer,
   expenses: expensesReducer,
-  login: loginReducer,
+  login: loginReducer
 });
 
 // TODO: localstorage

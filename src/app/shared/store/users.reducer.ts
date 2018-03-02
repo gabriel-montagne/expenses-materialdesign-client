@@ -10,7 +10,7 @@ export const INITIAL_STATE: IUsersStore = {
 };
 
 export function usersReducer(state: IUsersStore = INITIAL_STATE,
-                                action: any): IUsersStore {
+                             action: any): IUsersStore {
     switch (action.type) {
         case UsersActions.SAVE_USERS:
             return { ...state, users: action.payload};

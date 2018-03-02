@@ -17,7 +17,7 @@ export class GoogleOauthLogin implements IOAuthLogin {
   public image: string;
   public uid: string;
 
-  constructor(element){
+  constructor(element) {
     this.email = element.email;
     this.idToken = element.idToken;
     this.accessToken = element.token;

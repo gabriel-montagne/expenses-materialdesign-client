@@ -22,8 +22,8 @@ export class ChartsComponent implements OnInit {
         '2011',
         '2012'
     ];
-    public barChartType: string = 'bar';
-    public barChartLegend: boolean = true;
+    public barChartType = 'bar';
+    public barChartLegend = true;
 
     public barChartData: any[] = [
         { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
@@ -37,7 +37,7 @@ export class ChartsComponent implements OnInit {
         'Mail-Order Sales'
     ];
     public doughnutChartData: number[] = [350, 450, 100];
-    public doughnutChartType: string = 'doughnut';
+    public doughnutChartType = 'doughnut';
 
     // Radar
     public radarChartLabels: string[] = [
@@ -53,7 +53,7 @@ export class ChartsComponent implements OnInit {
         { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A' },
         { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B' }
     ];
-    public radarChartType: string = 'radar';
+    public radarChartType = 'radar';
 
     // Pie
     public pieChartLabels: string[] = [
@@ -62,7 +62,7 @@ export class ChartsComponent implements OnInit {
         'Mail Sales'
     ];
     public pieChartData: number[] = [300, 500, 100];
-    public pieChartType: string = 'pie';
+    public pieChartType = 'pie';
 
     // PolarArea
     public polarAreaChartLabels: string[] = [
@@ -73,9 +73,9 @@ export class ChartsComponent implements OnInit {
         'Corporate Sales'
     ];
     public polarAreaChartData: number[] = [300, 500, 100, 40, 120];
-    public polarAreaLegend: boolean = true;
+    public polarAreaLegend = true;
 
-    public polarAreaChartType: string = 'polarArea';
+    public polarAreaChartType = 'polarArea';
 
     // lineChart
     public lineChartData: Array<any> = [
@@ -124,8 +124,8 @@ export class ChartsComponent implements OnInit {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
         }
     ];
-    public lineChartLegend: boolean = true;
-    public lineChartType: string = 'line';
+    public lineChartLegend = true;
+    public lineChartType = 'line';
 
     // events
     public chartClicked(e: any): void {

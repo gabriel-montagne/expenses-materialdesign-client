@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IUser } from './user';
 import { environment } from '../../../../environments/environment';
 
-
 @Injectable()
 export class UsersService {
   public url = environment.apiUrl;

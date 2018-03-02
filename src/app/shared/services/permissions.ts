@@ -1,5 +1,4 @@
 
-
 export const appScopes = {
   admin: {
     users: {
@@ -43,4 +42,4 @@ export const appScopes = {
       editAll: false
     }
   }
-}
+};

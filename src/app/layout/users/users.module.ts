@@ -13,7 +13,7 @@ import { PageHeaderModule } from '../../shared';
     CommonModule,
       UsersRoutingModule,
       PageHeaderModule,
-      StatModule,
+      StatModule
   ],
   providers: [
       UsersService,
@@ -22,4 +22,3 @@ import { PageHeaderModule } from '../../shared';
   declarations: [UsersComponent]
 })
 export class UsersModule { }
-

@@ -79,7 +79,7 @@ export class SignupComponent implements OnInit {
       }
       if (password.value !== confirmPassword.value && password.value !== '' && confirmPassword.value !== '') {
         confirmPassword.setErrors({
-          mismatchedPasswords: true,
+          mismatchedPasswords: true
         });
         return {
           mismatchedPasswords: true

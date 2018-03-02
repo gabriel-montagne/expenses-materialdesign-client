@@ -7,7 +7,7 @@ export interface ILoginStore {
 }
 
 export const INITIAL_STATE: ILoginStore = {
-  login: null,
+  login: null
 };
 
 export function loginReducer(state: ILoginStore = INITIAL_STATE,

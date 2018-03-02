@@ -16,7 +16,7 @@ import { AuthService } from 'angular2-social-login';
 })
 export class HeaderComponent implements OnInit {
 
-  public loggedUser = User;
+  public loggedUser: User;
 
   @select(['login', 'login'])
   private _login$: Observable<any>;
