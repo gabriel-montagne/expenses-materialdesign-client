@@ -16,6 +16,8 @@ import { AuthServices } from './auth/shared/auth.services';
 import { AnonymGuard } from './shared/guard/anonym.guard';
 import { PermissionHandlerServices } from './shared/services/permission-handler.services';
 import { LoginActions } from './auth/login/shared/login.actions';
+import { Angular2SocialLoginModule } from 'angular2-social-login';
+import { oAuthProviders } from '../environments/environment';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -39,11 +41,15 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     AppRoutingModule,
-    StoreModule
+    StoreModule,
+    Angular2SocialLoginModule
   ],
   declarations: [AppComponent],
   providers: [AuthGuard, AnonymGuard, AuthServices, PermissionHandlerServices, LoginActions],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }
+
+Angular2SocialLoginModule.loadProvidersScripts(oAuthProviders);

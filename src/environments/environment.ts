@@ -12,6 +12,22 @@ export const environment = {
   reduxLog: true
 };
 
+export const oAuthProviders = {
+  'google': {
+    'clientId': '252899479655-aclf4njds8994sqe9q5trh7d5p5hivio.apps.googleusercontent.com'
+  }
+  /*
+		,
+		'linkedin': {
+			'clientId': 'LINKEDIN_CLIENT_ID'
+		},
+		'facebook': {
+			'clientId': 'FACEBOOK_CLIENT_ID',
+			'apiVersion': 'v2.4' // like v2.4
+		}
+	*/
+};
+
 const PROVIDERS: any[] = [
   {provide: 'Window', useFactory: getWindow}
 ];
