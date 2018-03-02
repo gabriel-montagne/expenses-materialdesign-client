@@ -36,6 +36,7 @@
         "jwt-decode": "^2.2.0",
         "moment": "^2.20.1",
         "ng2-charts": "^1.6.0",
+        "ng2-toastr": "^4.1.2",
         "redux": "^3.7.2",
         "redux-localstorage": "^0.4.1",
         "redux-logger": "^3.0.6",

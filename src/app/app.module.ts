@@ -18,6 +18,7 @@ import { PermissionHandlerServices } from './shared/services/permission-handler.
 import { LoginActions } from './auth/login/shared/login.actions';
 import { Angular2SocialLoginModule } from 'angular2-social-login';
 import { oAuthProviders } from '../environments/environment';
+import { ToastModule } from 'ng2-toastr';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -42,7 +43,8 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     AppRoutingModule,
     StoreModule,
-    Angular2SocialLoginModule
+    Angular2SocialLoginModule,
+    ToastModule.forRoot()
   ],
   declarations: [AppComponent],
   providers: [AuthGuard, AnonymGuard, AuthServices, PermissionHandlerServices, LoginActions],
