@@ -52,7 +52,7 @@
             Passwords must match!
           </div>
         </div>
-        <button class="btn rounded-btn" [disabled]="!registerForm.valid"> Register
+        <button class="btn rounded-btn" [disabled]="!registerForm.valid || isRegistering"> Register
         </button>&nbsp;
         <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
       </form>

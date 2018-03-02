@@ -1,9 +1,10 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { AbstractControl, EmailValidator, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthServices } from '../shared/auth.services';
 import { LoginResponse } from '../login/shared/login';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,12 @@ export class SignupComponent implements OnInit {
 
   public registerForm: FormGroup;
 
-  constructor(private _authServices: AuthServices) {
+  public isRegistering = false;
+
+  constructor(private _toastr: ToastsManager,
+              private _vRef: ViewContainerRef,
+              private _authServices: AuthServices) {
+    this._toastr.setRootViewContainerRef(this._vRef);
     this.registerForm = new FormGroup({
       fullname: new FormControl('', Validators.required),
       email: new FormControl('',
@@ -32,6 +38,7 @@ export class SignupComponent implements OnInit {
   }
 
   public register(form: FormGroup) {
+    this.isRegistering = true;
     const payload = {
       username: form.get('email').value,
       email: form.get('email').value,
@@ -41,9 +48,13 @@ export class SignupComponent implements OnInit {
     this._authServices.register(payload).subscribe(
       (result: LoginResponse) => {
         this._authServices.onSuccessfulLogin(result.token);
-        },
-      error => console.log(error)
-    );
+        this._toastr.success('Registering was successful!');
+        this.isRegistering = false;
+      },
+      error => {
+        this._toastr.warning('Registering was unsuccessful!');
+        this.isRegistering = false;
+      });
   }
 
   private validUsername(control: AbstractControl) {

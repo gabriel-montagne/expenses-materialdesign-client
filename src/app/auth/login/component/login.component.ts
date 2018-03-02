@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import { AuthServices } from '../../shared/auth.services';
 import { ILogin, ILoginResponse, LoginResponse } from '../shared/login';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'angular2-social-login';
 import { GoogleOauthLogin } from '../shared/oauth-login';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +21,11 @@ export class LoginComponent implements OnInit {
 
   private sub: any;
 
-  constructor(private _authServices: AuthServices,
+  constructor(private _toastr: ToastsManager,
+              private _vRef: ViewContainerRef,
+              private _authServices: AuthServices,
               private _oauthService: AuthService) {
+    this._toastr.setRootViewContainerRef(this._vRef);
     this.loginForm = new FormGroup({
       username: new FormControl(),
       password: new FormControl()
@@ -44,8 +48,10 @@ export class LoginComponent implements OnInit {
         (result: LoginResponse) => {
           this.isLogging = false;
           this._authServices.onSuccessfulLogin(result.token);
+          this._toastr.success('Login was successful!');
         },
         (err) => {
+          this._toastr.warning('Login was unsuccessful!');
           this.isLoginUnsuccessful = true;
           this.isLogging = false;
         }
@@ -62,8 +68,10 @@ export class LoginComponent implements OnInit {
             (result: LoginResponse) => {
               this.isLogging = false;
               this._authServices.onSuccessfulLogin(result.token);
+              this._toastr.success('Google login was successful!');
             },
             err => {
+              this._toastr.warning('Google login was unsuccessful!');
               this.isLoginUnsuccessful = true;
               this.isLogging = false;
             });
