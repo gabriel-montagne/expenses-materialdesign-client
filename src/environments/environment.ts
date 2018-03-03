@@ -14,7 +14,7 @@ export const environment = {
 
 export const oAuthProviders = {
   'google': {
-    'clientId': '252899479655-aclf4njds8994sqe9q5trh7d5p5hivio.apps.googleusercontent.com'
+    'clientId': '252899479655-qahi3ahjuvojjbjgp8v6qr9bpsam57fb.apps.googleusercontent.com '
   }
   /*
 		,
