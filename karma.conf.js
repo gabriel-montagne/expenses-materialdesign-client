@@ -7,7 +7,7 @@ module.exports = function (config) {
     frameworks: ['jasmine', '@angular/cli'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-firefox-launcher'),
+      require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular/cli/plugins/karma')
@@ -27,7 +27,11 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['FirefoxDeveloper'],
-    singleRun: false
+    browsers: ['Chrome'],
+    singleRun: false,
+    files: [
+      "./node_modules/font-awesome/css/font-awesome.css",
+      "./node_modules/ng2-toastr/bundles/ng2-toastr.min.css"
+    ]
   });
 };

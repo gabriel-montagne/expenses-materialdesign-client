@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   private sub: any;
 
-  constructor(private _toastr: ToastsManager,
+  constructor(public _toastr: ToastsManager,
               private _vRef: ViewContainerRef,
               private _authServices: AuthenticationService,
               private _oauthService: AuthService) {
@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
       username: form.get('username').value,
       password: form.get('password').value
     };
-
     this._authServices.basicLogin(payload)
       .subscribe(
         (result: LoginResponse) => {
@@ -54,6 +53,7 @@ export class LoginComponent implements OnInit {
           this._toastr.warning('Login was unsuccessful!');
           this.isLoginUnsuccessful = true;
           this.isLogging = false;
+          this._toastr.warning('Login was unsuccessful!');
         }
       );
   }
