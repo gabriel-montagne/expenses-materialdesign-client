@@ -6,7 +6,7 @@ import { LoginRoutingModule } from '../login-routing.module';
 import { CommonModule } from '@angular/common';
 import { ToastModule, ToastsManager } from 'ng2-toastr';
 import { AuthService } from 'angular2-social-login';
-import { AuthServices } from '../../shared/auth.services';
+import { AuthServices } from '../../shared/auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { PermissionHandlerServices } from '../../../shared/services/permission-handler.services';
@@ -20,7 +20,6 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let mockAuthServices;
-  let mockToastsManager;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -1,4 +1,5 @@
 import { AbstractMockObservableService } from '../../shared/tests/abstract-mock-observable.spec';
+import { Observable } from 'rxjs/Observable';
 
 export class AuthMockupService extends AbstractMockObservableService {
 
@@ -7,11 +8,12 @@ export class AuthMockupService extends AbstractMockObservableService {
       username: 'user1',
       password: 'password1',
       result: {
-        token: 'token1'
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+        'eyJlbWFpbCI6ImdhYmltdW50ZWFudS5zZHRAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwidXNlcm5hbWUiOiJnYWJpbXVudGVhbnUuc2R0QGdtYWlsLmNvbSIsInVzZXJpZCI6MTMsImZ1bGxuYW1lIjoiR2FicmllbCBNdW50ZWFudSJ9.w86SWZwL735MrdDQ-PHkHBkGR3XGDe17TVOUfWyeWC0'
       }
     },
     {
-      username: 'user2',
+      username: 'existing@user.com',
       password: 'password2',
       result: {
         token: 'token2'
@@ -20,7 +22,15 @@ export class AuthMockupService extends AbstractMockObservableService {
   ];
 
   isUsernameAvailable(username) {
-    return (username === 'existents-user');
+    let _login = this.logins.filter((login) => {
+      return login.username === username;
+    });
+    if (_login.length === 0) {
+      this._fakeContent = 'true';
+    } else {
+      this._fakeContent = 'false';
+    }
+    return this;
   }
 
   onSuccessfulLogin(token): void {

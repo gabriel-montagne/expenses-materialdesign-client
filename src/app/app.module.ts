@@ -11,12 +11,16 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { NgReduxModule } from '@angular-redux/store';
 import { StoreModule } from './shared/store/store.module';
+<<<<<<< HEAD
 import { AuthenticationService } from './auth/shared/authentication.service';
+=======
+import { AuthServices } from './auth/shared/auth.service';
+>>>>>>> feat(tests) Add login tests
 import { AnonymGuard } from './shared/guard/anonym.guard';
 import { PermissionHandlerServices } from './shared/services/permission-handler.services';
 import { LoginActions } from './auth/login/shared/login.actions';
 import { Angular2SocialLoginModule } from 'angular2-social-login';
-import { oAuthProviders } from '../environments/environment';
+import { environment, oAuthProviders } from '../environments/environment';
 import { ToastModule } from 'ng2-toastr';
 import { TokenInterceptor } from './auth/shared/token.interceptor';
 
