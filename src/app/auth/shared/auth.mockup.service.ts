@@ -1,7 +1,7 @@
 import { AbstractMockObservableService } from '../../shared/tests/abstract-mock-observable.spec';
 import { Observable } from 'rxjs/Observable';
 
-export class AuthMockupService extends AbstractMockObservableService {
+export class AuthenticationMockupService extends AbstractMockObservableService {
 
   private logins = [
     {
@@ -43,9 +43,9 @@ export class AuthMockupService extends AbstractMockObservableService {
     });
     if (_login) {
       if (_login.password === payload.password) {
-        this._fakeError = _login.result;
-      } else {
         this._fakeContent = 'Authentication successful';
+      } else {
+        this._fakeError = 'Authentication unsuccessful';
       }
     } else {
       this._fakeError = 'Authentication unsuccessful';

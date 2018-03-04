@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { createTranslateLoader } from '../app.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AuthServices } from '../auth/shared/auth.services';
+import { AuthenticationService } from '../auth/shared/authentication.service';
 import { AuthService } from 'angular2-social-login';
 import { PermissionHandlerServices } from '../shared/services/permission-handler.services';
 import { LoginActions } from '../auth/login/shared/login.actions';
@@ -39,7 +39,7 @@ describe('LayoutComponent', () => {
           })
         ],
         providers: [
-          AuthServices,
+          AuthenticationService,
           AuthService,
           LoginActions,
           PermissionHandlerServices

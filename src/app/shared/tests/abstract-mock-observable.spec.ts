@@ -1,4 +1,5 @@
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 export abstract class AbstractMockObservableService {
   protected _subscription: Subscription;
@@ -31,5 +32,21 @@ export abstract class AbstractMockObservableService {
       complete();
     }
     return this._subscription;
+  }
+
+  map(next: Function, error?: Function, complete?: Function): Observable<any> {
+    this._subscription = new Subscription();
+    spyOn(this._subscription, 'unsubscribe');
+
+    if (next && this._fakeContent && !this._fakeError) {
+      next(this._fakeContent);
+    }
+    if (error && this._fakeError) {
+      error(this._fakeError);
+    }
+    if (complete) {
+      complete();
+    }
+    return Observable.of(this._subscription);
   }
 }

@@ -16,7 +16,7 @@ import { ToastsManager } from 'ng2-toastr';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public username: string = null;
-  public isLoginUnsuccessful = false;
+  public isLoginUnsuccessful: boolean;
   public isLogging = false;
 
   private sub: any;
@@ -48,12 +48,12 @@ export class LoginComponent implements OnInit {
           this.isLogging = false;
           this._authServices.onSuccessfulLogin(result.token);
           this._toastr.success('Login was successful!');
+          this.isLoginUnsuccessful = false;
         },
         () => {
           this._toastr.warning('Login was unsuccessful!');
-          this.isLoginUnsuccessful = true;
           this.isLogging = false;
-          this._toastr.warning('Login was unsuccessful!');
+          this.isLoginUnsuccessful = true;
         }
       );
   }

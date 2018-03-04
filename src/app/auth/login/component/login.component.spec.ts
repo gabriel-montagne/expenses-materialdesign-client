@@ -6,26 +6,26 @@ import { LoginRoutingModule } from '../login-routing.module';
 import { CommonModule } from '@angular/common';
 import { ToastModule, ToastsManager } from 'ng2-toastr';
 import { AuthService } from 'angular2-social-login';
-import { AuthServices } from '../../shared/auth.service';
+import { AuthenticationService } from '../../shared/authentication.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { PermissionHandlerServices } from '../../../shared/services/permission-handler.services';
 import { LoginActions } from '../shared/login.actions';
 import { NgReduxModule } from '@angular-redux/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthMockupService } from '../../shared/auth.mockup.service';
+import { AuthenticationMockupService } from '../../shared/auth.mockup.service';
 import { isMethodMetadata } from '@angular/compiler-cli';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let mockAuthServices;
+  let mockAuthenticationServices;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
       providers: [
-        {provide: AuthServices, useValue: mockAuthServices},
+        {provide: AuthenticationService, useValue: mockAuthenticationServices},
         ToastsManager,
         AuthService,
         PermissionHandlerServices,
@@ -45,7 +45,7 @@ describe('LoginComponent', () => {
   }));
 
   beforeEach(() => {
-    mockAuthServices = new AuthMockupService();
+    mockAuthenticationServices = new AuthenticationMockupService();
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -71,7 +71,7 @@ describe('LoginComponent', () => {
       compiled.querySelector('#btnLogin').click();
       tick(10000);
       flushMicrotasks();
-      expect(component.isLoginUnsuccessful).toEqual(true);
+      expect(component.isLoginUnsuccessful).toEqual(false);
     }));
 
   it('should unsuccessfuly login user1',
@@ -84,6 +84,6 @@ describe('LoginComponent', () => {
       compiled.querySelector('#btnLogin').click();
       tick(10000);
       flushMicrotasks();
-      expect(component.isLoginUnsuccessful).toEqual(false);
+      expect(component.isLoginUnsuccessful).toEqual(true);
     }));
 });

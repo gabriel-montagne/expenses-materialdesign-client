@@ -3,7 +3,10 @@
     <div class="col-md-4">
       <h1>Expenses client</h1>
       <form novalidate
-            role="form" [formGroup]="registerForm" (ngSubmit)="register(registerForm)">
+            role="form"
+            id="registerForm"
+            [formGroup]="registerForm"
+            (ngSubmit)="register(registerForm)">
         <div class="form-content">
           <div class="form-group">
             <input type="text" formControlName="fullname"
@@ -30,8 +33,12 @@
                    id="email" name="email" placeholder="Email">
             <div class="form-control-feedback"
                  *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.dirty">
-              <p *ngIf="registerForm.controls.email.errors.email">Email invald</p>
-              <p *ngIf="registerForm.controls.email.errors.usernameExists">User already registered</p>
+              <p id="email-invalid"
+                 *ngIf="registerForm.controls.email.errors.email">
+                Email invald</p>
+              <p id="username-exists"
+                 *ngIf="registerForm.controls.email.errors.usernameExists">
+                User already registered</p>
             </div>
           </div>
           <div class="form-group">
@@ -52,7 +59,9 @@
             Passwords must match!
           </div>
         </div>
-        <button class="btn rounded-btn" [disabled]="!registerForm.valid || isRegistering"> Register
+        <button id="submit"
+                class="btn rounded-btn"
+                [disabled]="!registerForm.valid || isRegistering"> Register
         </button>&nbsp;
         <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
       </form>
