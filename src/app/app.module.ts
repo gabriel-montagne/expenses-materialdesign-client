@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
-import { HttpModule } from '@angular/http';
 import { NgReduxModule } from '@angular-redux/store';
 import { StoreModule } from './shared/store/store.module';
-import { AuthServices } from './auth/shared/auth.services';
+import { AuthenticationService } from './auth/shared/authentication.service';
 import { AnonymGuard } from './shared/guard/anonym.guard';
 import { PermissionHandlerServices } from './shared/services/permission-handler.services';
 import { LoginActions } from './auth/login/shared/login.actions';
 import { Angular2SocialLoginModule } from 'angular2-social-login';
 import { oAuthProviders } from '../environments/environment';
 import { ToastModule } from 'ng2-toastr';
+import { TokenInterceptor } from './auth/shared/token.interceptor';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -47,7 +47,18 @@ export function createTranslateLoader(http: HttpClient) {
     ToastModule.forRoot()
   ],
   declarations: [AppComponent],
-  providers: [AuthGuard, AnonymGuard, AuthServices, PermissionHandlerServices, LoginActions],
+  providers: [
+    AuthGuard,
+    AnonymGuard,
+    AuthenticationService,
+    PermissionHandlerServices,
+    LoginActions,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 

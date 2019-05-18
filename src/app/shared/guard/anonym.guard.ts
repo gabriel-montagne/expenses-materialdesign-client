@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Router } from '@angular/router';
-import { AuthServices } from '../../auth/shared/auth.services';
+import { AuthenticationService } from '../../auth/shared/authentication.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -9,12 +9,12 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AnonymGuard implements CanActivate {
   constructor(private _router: Router,
-              private _authServices: AuthServices) {
+              private _auth: AuthenticationService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> {
-    return this._authServices.isAuthenticated()
+    return this._auth.isAuthenticated()
       .map (
         result => {
           if (result) {
@@ -25,7 +25,7 @@ export class AnonymGuard implements CanActivate {
           }
         }
       )
-      .catch((error) => {
+      .catch(() => {
         return Observable.of(false);
       });
   }

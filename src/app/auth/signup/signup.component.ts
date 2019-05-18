@@ -1,8 +1,8 @@
-import { Component, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import { AbstractControl, EmailValidator, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { AuthServices } from '../shared/auth.services';
+import { AuthenticationService } from '../shared/authentication.service';
 import { LoginResponse } from '../login/shared/login';
 import { ToastsManager } from 'ng2-toastr';
 
@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private _toastr: ToastsManager,
               private _vRef: ViewContainerRef,
-              private _authServices: AuthServices) {
+              private _auth: AuthenticationService) {
     this._toastr.setRootViewContainerRef(this._vRef);
     this.registerForm = new FormGroup({
       fullname: new FormControl('', Validators.required),
@@ -45,13 +45,13 @@ export class SignupComponent implements OnInit {
       password: form.get('password').value,
       fullname: form.get('fullname').value
     };
-    this._authServices.register(payload).subscribe(
+    this._auth.register(payload).subscribe(
       (result: LoginResponse) => {
-        this._authServices.onSuccessfulLogin(result.token);
+        this._auth.onSuccessfulLogin(result.token);
         this._toastr.success('Registering was successful!');
         this.isRegistering = false;
       },
-      error => {
+      () => {
         this._toastr.warning('Registering was unsuccessful!');
         this.isRegistering = false;
       });
@@ -59,7 +59,7 @@ export class SignupComponent implements OnInit {
 
   private validUsername(control: AbstractControl) {
     const username = control.value;
-    return this._authServices.isUsernameAvailable(username).map(
+    return this._auth.isUsernameAvailable(username).map(
       (res) => {
         if (res === 'false') {
           return {usernameExists: true};

@@ -1,16 +1,14 @@
 import { Router } from '@angular/router';
-import { Injectable, Inject, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { ILogin, LoginResponse } from '../login/shared/login';
+import { LoginResponse } from '../login/shared/login';
 import { Observable } from 'rxjs/Observable';
-import { NgRedux } from '@angular-redux/store';
-import { IAppState } from '../../shared/store/store.module';
 import { PermissionHandlerServices } from '../../shared/services/permission-handler.services';
 import { LoginActions } from '../login/shared/login.actions';
 
 @Injectable()
-export class AuthServices implements OnDestroy {
+export class AuthenticationService implements OnDestroy {
   public url = environment.apiUrl;
   public token = environment.apiToken;
   public login: LoginResponse;
@@ -18,8 +16,8 @@ export class AuthServices implements OnDestroy {
   constructor(public _router: Router,
               private _httpClient: HttpClient,
               private _permissionsHandler: PermissionHandlerServices,
-              private _loginActions: LoginActions,
-              private _store: NgRedux<IAppState>) {
+              private _loginActions: LoginActions
+  ) {
   }
 
   public addAuthorization() {
@@ -45,7 +43,11 @@ export class AuthServices implements OnDestroy {
   }
 
   public isAuthenticated() {
-    return this._httpClient.get(this.url + 'auth/isAuthenticated', this.addAuthorization());
+    return this._httpClient.get(this.url + 'auth/isAuthenticated' );
+  }
+
+  public getToken() {
+    return localStorage.getItem('token');
   }
 
   public isUsernameAvailable(username: string): Observable<any> {
@@ -68,7 +70,7 @@ export class AuthServices implements OnDestroy {
   }
 
   public logout() {
-    return this._httpClient.post(this.url + 'auth/signOut', {}, this.addAuthorization());
+    return this._httpClient.post(this.url + 'auth/signOut', {} );
   }
 
   ngOnDestroy() {

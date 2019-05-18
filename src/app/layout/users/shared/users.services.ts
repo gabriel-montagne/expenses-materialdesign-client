@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { IUser } from './user';
 import { environment } from '../../../../environments/environment';
 
@@ -10,35 +10,26 @@ export class UsersService {
   public token = environment.apiToken;
   public httpOptions: any;
 
-  constructor(private _apiHttp: HttpClient) {}
-
-  public addAuthorization() {
-    this.token = localStorage.getItem('token');
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.token
-      })
-    };
+  constructor(private _apiHttp: HttpClient) {
   }
 
   public getUsers() {
-    return this._apiHttp.get(this.url + 'users', this.addAuthorization());
+    return this._apiHttp.get(this.url + 'users');
   }
 
   public getMe() {
-    return this._apiHttp.get(this.url + 'users/me', this.addAuthorization());
+    return this._apiHttp.get(this.url + 'users/me');
   }
 
   public getUser(id: number) {
-    return this._apiHttp.get(this.url + 'users/' + id.toString(), this.addAuthorization());
+    return this._apiHttp.get(this.url + 'users/' + id.toString());
   }
 
   public updateUser(user: IUser) {
-    return this._apiHttp.post(this.url + 'users/' + user.id.toString(), user, this.addAuthorization());
+    return this._apiHttp.post(this.url + 'users/' + user.id.toString(), user);
   }
 
   public deleteUser(id: number) {
-    return this._apiHttp.delete(this.url + 'users/' + id.toString(), this.addAuthorization());
+    return this._apiHttp.delete(this.url + 'users/' + id.toString());
   }
 }

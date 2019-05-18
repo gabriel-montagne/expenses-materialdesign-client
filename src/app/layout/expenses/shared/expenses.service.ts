@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Expense } from './expense';
 
 @Injectable()
@@ -13,39 +13,25 @@ export class ExpensesService {
 
   }
 
-  public addAuthorization() {
-    this.token = localStorage.getItem('token');
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.token
-      })
-    };
-  }
-
   public getUserExpenses(userid: string) {
     return this._apiHttp.get(
-      this.url + 'records/' + userid,
-      this.addAuthorization());
+      this.url + 'records/' + userid);
   }
 
   public addExpense(expense: Expense) {
     return this._apiHttp.post(
       this.url + 'records/' + expense.userId.toString(),
-      expense,
-      this.addAuthorization());
+      expense);
   }
 
   public updateExpense(expense: Expense) {
     return this._apiHttp.patch(
       this.url + 'records/' + expense.userId.toString() + '/' + expense.id.toString(),
-      expense,
-      this.addAuthorization());
+      expense);
   }
 
   public deleteExpense(expense: Expense) {
     return this._apiHttp.delete(
-      this.url + 'records/' + expense.userId.toString() + '/' + expense.id.toString(),
-      this.addAuthorization());
+      this.url + 'records/' + expense.userId.toString() + '/' + expense.id.toString());
   }
 }

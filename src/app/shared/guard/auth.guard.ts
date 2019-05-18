@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Router } from '@angular/router';
-import { AuthServices } from '../../auth/shared/auth.services';
+import { AuthenticationService } from '../../auth/shared/authentication.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { NgRedux, select } from '@angular-redux/store';
-import { IAppState } from '../store/store.module';
-import { IUser } from '../../layout/users/shared/user';
-import { ILoginResponse, LoginResponse } from '../../auth/login/shared/login';
+import { select } from '@angular-redux/store';
+import { LoginResponse } from '../../auth/login/shared/login';
 import { PermissionHandlerServices } from '../services/permission-handler.services';
 import { LoginActions } from '../../auth/login/shared/login.actions';
 
@@ -20,10 +18,9 @@ export class AuthGuard implements CanActivate {
   private _login$: Observable<any>;
 
   constructor(private _router: Router,
-              private _authServices: AuthServices,
+              private _auth: AuthenticationService,
               private _permissionHandler: PermissionHandlerServices,
-              private _loginActions: LoginActions,
-              private _store: NgRedux<IAppState>) {
+              private _loginActions: LoginActions) {
     this._login$.subscribe((login) => {
       this._login = login;
     });
@@ -62,7 +59,7 @@ export class AuthGuard implements CanActivate {
 
   private resolveRoute(route: ActivatedRouteSnapshot,
                        state: RouterStateSnapshot): Observable<boolean> {
-    return this._authServices.isAuthenticated()
+    return this._auth.isAuthenticated()
       .map(
         result => {
           if (result && this.checkScope(state)) {
@@ -74,7 +71,7 @@ export class AuthGuard implements CanActivate {
         }
       )
       .catch(
-        error => {
+        () => {
           this._router.navigate(['login']);
           return Observable.of(false);
         });

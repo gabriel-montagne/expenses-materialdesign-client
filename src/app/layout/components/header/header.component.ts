@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthServices } from '../../../auth/shared/auth.services';
-import { PermissionHandlerServices } from '../../../shared/services/permission-handler.services';
-import { NgRedux, select } from '@angular-redux/store';
-import { IAppState } from '../../../shared/store/store.module';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../../auth/shared/authentication.service';
+import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../users/shared/user';
 import { AuthService } from 'angular2-social-login';
@@ -24,9 +21,8 @@ export class HeaderComponent implements OnInit {
   pushRightClass: 'push-right';
 
   constructor(public router: Router,
-              private _authServices: AuthServices,
-              private _oauthService: AuthService,
-              private _store: NgRedux<IAppState>) {
+              private _auth: AuthenticationService,
+              private _oauthService: AuthService) {
     this._login$.subscribe((user) => {
       this.loggedUser = user;
     });
@@ -46,8 +42,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onLoggedout() {
-    this._authServices.logout().subscribe(
-      res => {
+    this._auth.logout().subscribe(
+      () => {
         localStorage.removeItem('token');
         localStorage.removeItem('role');
         localStorage.removeItem('userid');
