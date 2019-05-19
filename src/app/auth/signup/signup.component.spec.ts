@@ -15,6 +15,7 @@ import { SignupRoutingModule } from './signup-routing.module';
 import { LoginActions } from '../login/shared/login.actions';
 import { AuthenticationMockupService } from '../shared/auth.mockup.service';
 import { By } from '@angular/platform-browser';
+import { element } from 'protractor';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -61,12 +62,28 @@ describe('SignupComponent', () => {
     });
 
   it('should raise error on incorrect email',
-    () => {
+    fakeAsync(() => {
       let form = component.registerForm;
       let control = form.controls['email'];
       control.setValue('some.email');
       let errors = control.errors;
       fixture.detectChanges();
       expect(control.hasError('email')).toBeTruthy();
-    });
+    }));
+
+  it('should enable register only on fields not empty', () => {
+    let elem = fixture.nativeElement;
+    fixture.detectChanges();
+    elem.querySelector('#fullname').value = 'some name';
+    elem.querySelector('#fullname').dispatchEvent(new Event('input'));
+    elem.querySelector('#email').value = 'existing@user.com';
+    elem.querySelector('#email').dispatchEvent(new Event('input'));
+    elem.querySelector('#password').value = '12345678';
+    elem.querySelector('#password').dispatchEvent(new Event('input'));
+    elem.querySelector('#passwordRepeat').value = '12345678';
+    elem.querySelector('#passwordRepeat').dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    let submit = elem.querySelector('#submit');
+    expect(submit.disable).toBeFalsy();
+  });
 });
