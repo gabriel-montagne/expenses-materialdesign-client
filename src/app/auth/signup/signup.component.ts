@@ -6,6 +6,8 @@ import { AuthenticationService } from '../shared/authentication.service';
 import { LoginResponse } from '../login/shared/login';
 import { ToastsManager } from 'ng2-toastr';
 
+import { registerAsyncValidator } from '../shared/username-exists.validator';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -22,15 +24,14 @@ export class SignupComponent implements OnInit {
               private _vRef: ViewContainerRef,
               private _auth: AuthenticationService) {
     this._toastr.setRootViewContainerRef(this._vRef);
+
     this.registerForm = new FormGroup({
       fullname: new FormControl('', Validators.required),
       email: new FormControl('',
-        Validators.email,
-        (control) => {
-          return this.validUsername(control);
-        }),
+        [Validators.email, Validators.required],
+        registerAsyncValidator(_auth)),
       password: new FormControl('', Validators.required),
-      passwordRepeat: new FormControl()
+      passwordRepeat: new FormControl('', Validators.required),
     }, this.matchingPasswords('password', 'passwordRepeat'));
   }
 
