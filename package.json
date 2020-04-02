@@ -3,14 +3,14 @@
   "version": "4.0.0",
   "license": "Apache",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve --ec true",
-    "build": "ng build --prod",
-    "gitbuild": "ng build --prod --base /start-angular/expenses-md-scala-client/master/dist/",
-    "test": "ng test -e=test",
-    "lint": "ng lint",
+    "ng": "node_modules/.bin/ng",
+    "start": "node_modules/.bin/ng serve --ec true",
+    "build": "node_modules/.bin/ng build --prod",
+    "gitbuild": "node_modules/.bin/ng build --prod --base /start-angular/expenses-md-scala-client/master/dist/",
+    "test": "node_modules/.bin/ng test -e=test",
+    "lint": "node_modules/.bin/ng lint",
     "lint-fix": "tslint --fix -c ./tslint.json 'src/**/*{.ts,.tsx}'",
-    "e2e": "ng e2e"
+    "e2e": "node_modules/.bin/ng e2e"
   },
   "private": true,
   "dependencies": {
